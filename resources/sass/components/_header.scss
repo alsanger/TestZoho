@@ -1,0 +1,113 @@
+/*
+.zoho-header {
+    background-color: #1285de;
+    color: white;
+    padding: 15px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.zoho-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.zoho-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.linkedin-link {
+    display: flex;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+.linkedin-link:hover {
+    opacity: 0.8;
+}
+
+.linkedin-icon {
+    background-color: white;
+    color: #0077b5;
+    font-weight: bold;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 6px;
+}
+
+.linkedin-text {
+    font-weight: 500;
+}
+*/
+
+.zoho-header {
+    background-color: #1285de;
+    color: white;
+    padding: 15px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.zoho-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.zoho-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.zoho-social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.linkedin-link, .dou-link {
+    display: flex;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+.linkedin-link:hover, .dou-link:hover {
+    opacity: 0.8;
+}
+
+.linkedin-icon, .dou-icon {
+    background-color: white;
+    font-weight: bold;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 6px;
+}
+
+.linkedin-icon {
+    color: #0077b5;
+}
+
+.dou-icon {
+    color: #1285de;
+}
+
+.linkedin-text, .dou-text {
+    font-weight: 500;
+}

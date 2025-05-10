@@ -1,5 +1,6 @@
 <!-- resources/js/components/ZohoForm.vue -->
 <template>
+    <Header />
     <div class="zoho-form-wrapper">
         <div class="zoho-form-card">
             <h2 class="zoho-form-title">Создать сделку и аккаунт в Zoho CRM</h2>
@@ -65,9 +66,11 @@
 
 <script>
 import axios from 'axios';
+import Header from "../components/Header.vue";
 
 export default {
     name: 'ZohoForm',
+    components: {Header},
     data() {
         return {
             form: {

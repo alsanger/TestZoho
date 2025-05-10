@@ -1,5 +1,6 @@
 <!-- resources/js/components/ZohoAuth.vue -->
 <template>
+    <Header />
     <div class="zoho-auth-wrapper">
         <div class="zoho-card">
             <h2>Авторизация Zoho CRM</h2>
@@ -10,8 +11,11 @@
 </template>
 
 <script>
+import Header from "../components/Header.vue";
+
 export default {
     name: 'ZohoAuth',
+    components: {Header},
     props: {
         authUrl: {
             type: String,

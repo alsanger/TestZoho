@@ -57,8 +57,8 @@ class ZohoService
             $data = $response->json();
 
             if (!$data || isset($data['error']) || !isset($data['access_token'])) {
-                $errorMessage = isset($data['error']) ? $data['error'] : 'Ошибка при получении токена';
-                return ['success' => false, 'message' => 'Ошибка авторизации: ' . $errorMessage];
+                $errorMessage = $data['error'] ?? 'Error getting token';
+                return ['success' => false, 'message' => 'Authorization error: ' . $errorMessage];
             }
 
             // Удаляем старые токены и создаем новый
@@ -71,10 +71,10 @@ class ZohoService
                 'expires_at' => Carbon::now()->addSeconds($data['expires_in']),
             ]);
 
-            return ['success' => true, 'message' => 'Авторизация в Zoho CRM успешна'];
+            return ['success' => true, 'message' => 'Authorization in Zoho CRM successful'];
         } catch (\Exception $e) {
-            Log::error('Ошибка авторизации Zoho', ['error' => $e->getMessage()]);
-            return ['success' => false, 'message' => 'Ошибка авторизации: ' . $e->getMessage()];
+            Log::error('Zoho authorization error', ['error' => $e->getMessage()]);
+            return ['success' => false, 'message' => 'Authorization error: ' . $e->getMessage()];
         }
     }
 
@@ -107,7 +107,7 @@ class ZohoService
             $data = $response->json();
 
             if (!$data || isset($data['error'])) {
-                Log::error('Ошибка обновления токена', ['error' => $data['error'] ?? 'Неизвестная ошибка']);
+                Log::error('Token update error', ['error' => $data['error'] ?? 'Unknown error']);
                 return null;
             }
 
@@ -118,7 +118,7 @@ class ZohoService
 
             return $token->access_token;
         } catch (\Exception $e) {
-            Log::error('Исключение при обновлении токена', ['error' => $e->getMessage()]);
+            Log::error('Exception while updating token', ['error' => $e->getMessage()]);
             return null;
         }
     }
@@ -128,7 +128,7 @@ class ZohoService
         $token = $this->getToken();
 
         if (!$token) {
-            return ['success' => false, 'error' => 'Токен авторизации отсутствует или недействителен'];
+            return ['success' => false, 'error' => 'Authorization token is missing or invalid'];
         }
 
         try {
@@ -157,10 +157,10 @@ class ZohoService
                 }
             }
 
-            return ['success' => false, 'error' => 'Не удалось получить этапы сделок'];
+            return ['success' => false, 'error' => 'Failed to retrieve deal stages'];
         } catch (\Exception $e) {
-            Log::error('Ошибка получения этапов сделок', ['error' => $e->getMessage()]);
-            return ['success' => false, 'error' => 'Произошла ошибка: ' . $e->getMessage()];
+            Log::error('Error retrieving deal stages', ['error' => $e->getMessage()]);
+            return ['success' => false, 'error' => 'An error occurred: ' . $e->getMessage()];
         }
     }
 
@@ -169,7 +169,7 @@ class ZohoService
         $token = $this->getToken();
 
         if (!$token) {
-            return ['success' => false, 'error' => 'Токен авторизации отсутствует или недействителен. Пожалуйста, авторизуйтесь заново.'];
+            return ['success' => false, 'error' => 'The authorization token is missing or invalid. Please log in again.'];
         }
 
         try {
@@ -193,7 +193,7 @@ class ZohoService
                 !isset($accountResult['data']) ||
                 !isset($accountResult['data'][0]['details']['id'])
             ) {
-                return ['success' => false, 'error' => 'Не удалось создать аккаунт', 'details' => $accountResult];
+                return ['success' => false, 'error' => 'Failed to create account', 'details' => $accountResult];
             }
 
             // Получаем ID аккаунта
@@ -220,7 +220,7 @@ class ZohoService
             if (!isset($dealResult['data'])) {
                 return [
                     'success' => false,
-                    'error' => 'Не удалось создать сделку',
+                    'error' => 'Failed to create deal',
                     'details' => $dealResult,
                 ];
             }
@@ -231,8 +231,8 @@ class ZohoService
                 'deal' => $dealResult['data'][0]
             ];
         } catch (\Exception $e) {
-            Log::error('Ошибка создания записей в Zoho', ['error' => $e->getMessage()]);
-            return ['success' => false, 'error' => 'Произошла ошибка: ' . $e->getMessage()];
+            Log::error('Error creating records in Zoho', ['error' => $e->getMessage()]);
+            return ['success' => false, 'error' => 'An error occurred: ' . $e->getMessage()];
         }
     }
 }
