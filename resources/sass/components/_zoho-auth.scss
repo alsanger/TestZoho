@@ -1,0 +1,55 @@
+// resources/sass/components/_zoho-auth.scss
+.zoho-auth-wrapper {
+    background: linear-gradient(to right, #f8f9fa, #eef1f4);
+    padding: 3rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+
+    .zoho-card {
+        background-color: #ffffff;
+        border-radius: 1rem;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        padding: 2rem 3rem;
+        max-width: 600px;
+        width: 100%;
+        text-align: center;
+        border: 1px solid #e5e7eb;
+
+        h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: #4b5563;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .zoho-button {
+            background-color: #1285de;
+            color: white;
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            border: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 0.95rem;
+            text-decoration: none;
+
+            &:hover {
+                background-color: #106db5;
+            }
+
+            &:disabled {
+                background-color: #93c5fd;
+                cursor: not-allowed;
+            }
+        }
+    }
+}
