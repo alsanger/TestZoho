@@ -14,4 +14,5 @@ Route::middleware(['zoho.auth'])->group(function () {
         return Inertia::render('ZohoForm');
     });
     Route::post('/api/zoho/create', [ZohoController::class, 'createRecords']);
+    Route::get('/api/zoho/deal-stages', [ZohoController::class, 'getDealStages']);
 });

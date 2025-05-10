@@ -20,7 +20,7 @@ class CreateAccountDealRequest extends FormRequest
             'account_website' => 'required|url|max:255',
             'account_phone' => 'required|string|max:20',
             'deal_name' => 'required|string|max:255',
-            'deal_stage' => 'required|string|in:Qualification,Needs Analysis,Value Proposition,Closed Won,Closed Lost',
+            'deal_stage' => 'required|string|max:100',
         ];
     }
 

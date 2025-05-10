@@ -55,15 +55,13 @@
                             <div class="mb-4">
                                 <label class="block text-gray-700 mb-2">Стадия сделки*</label>
                                 <select v-model="form.deal_stage" class="w-full border px-3 py-2 rounded" required>
-                                    <option value="Qualification">Qualification</option>
-                                    <option value="Needs Analysis">Needs Analysis</option>
-                                    <option value="Value Proposition">Value Proposition</option>
-                                    <option value="Closed Won">Closed Won</option>
-                                    <option value="Closed Lost">Closed Lost</option>
+                                    <option v-for="stage in dealStages" :key="stage.value" :value="stage.value">
+                                        {{ stage.label }}
+                                    </option>
                                 </select>
-                                <p v-if="errors.deal_stage" class="text-red-500 text-sm mt-1">{{
-                                        errors.deal_stage
-                                    }}</p>
+                                <p v-if="errors.deal_stage" class="text-red-500 text-sm mt-1">
+                                    {{ errors.deal_stage }}
+                                </p>
                             </div>
                         </div>
 
@@ -91,15 +89,46 @@ export default {
                 account_website: '',
                 account_phone: '',
                 deal_name: '',
-                deal_stage: 'Qualification'
+                deal_stage: ''
             },
+            dealStages: [],  // массив для хранения этапов сделок
             errors: {},
             loading: false,
             success: null,
-            error: null
+            error: null,
+            loadingStages: false
         };
     },
+    created() {
+        // Загружаем этапы сделок при создании компонента
+        this.fetchDealStages();
+    },
     methods: {
+        fetchDealStages() {
+            this.loadingStages = true;
+
+            axios.get('/api/zoho/deal-stages')
+                .then(response => {
+                    if (response.data && response.data.stages) {
+                        this.dealStages = response.data.stages;
+
+                        // Устанавливаем первое значение по умолчанию, если оно есть
+                        if (this.dealStages.length > 0) {
+                            this.form.deal_stage = this.dealStages[0].value;
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Ошибка при загрузке этапов сделок:', error);
+                    if (error.response && error.response.status === 401) {
+                        // Неавторизованный доступ - перенаправляем на страницу авторизации
+                        window.location.href = '/auth/zoho';
+                    }
+                })
+                .finally(() => {
+                    this.loadingStages = false;
+                });
+        },
         submitForm() {
             this.errors = {};
             this.success = null;
