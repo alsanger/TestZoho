@@ -3,7 +3,7 @@
     <Header />
     <div class="zoho-form-wrapper">
         <div class="zoho-form-card">
-            <h2 class="zoho-form-title">Создать сделку и аккаунт в Zoho CRM</h2>
+            <h2 class="zoho-form-title">Create a deal and account in Zoho CRM</h2>
 
             <div v-if="success" class="zoho-alert zoho-alert-success">
                 {{ success }}
@@ -15,36 +15,36 @@
 
             <form @submit.prevent="submitForm" class="zoho-form">
                 <div class="zoho-form-section">
-                    <h3 class="zoho-section-title">Данные аккаунта</h3>
+                    <h3 class="zoho-section-title">Account data</h3>
                     <div class="zoho-form-group">
-                        <label class="zoho-form-label">Название аккаунта*</label>
+                        <label class="zoho-form-label">Account name*</label>
                         <input v-model="form.account_name" type="text" class="zoho-form-input" required>
                         <p v-if="errors.account_name" class="zoho-form-error">{{ errors.account_name }}</p>
                     </div>
 
                     <div class="zoho-form-group">
-                        <label class="zoho-form-label">Сайт*</label>
+                        <label class="zoho-form-label">Website*</label>
                         <input v-model="form.account_website" type="url" class="zoho-form-input" required>
                         <p v-if="errors.account_website" class="zoho-form-error">{{ errors.account_website }}</p>
                     </div>
 
                     <div class="zoho-form-group">
-                        <label class="zoho-form-label">Телефон*</label>
+                        <label class="zoho-form-label">Phone*</label>
                         <input v-model="form.account_phone" type="tel" class="zoho-form-input" required>
                         <p v-if="errors.account_phone" class="zoho-form-error">{{ errors.account_phone }}</p>
                     </div>
                 </div>
 
                 <div class="zoho-form-section">
-                    <h3 class="zoho-section-title">Данные сделки</h3>
+                    <h3 class="zoho-section-title">Deal data</h3>
                     <div class="zoho-form-group">
-                        <label class="zoho-form-label">Название сделки*</label>
+                        <label class="zoho-form-label">Deal name*</label>
                         <input v-model="form.deal_name" type="text" class="zoho-form-input" required>
                         <p v-if="errors.deal_name" class="zoho-form-error">{{ errors.deal_name }}</p>
                     </div>
 
                     <div class="zoho-form-group">
-                        <label class="zoho-form-label">Стадия сделки*</label>
+                        <label class="zoho-form-label">Deal stage*</label>
                         <select v-model="form.deal_stage" class="zoho-form-input" required>
                             <option v-for="stage in dealStages" :key="stage.value" :value="stage.value">
                                 {{ stage.label }}
@@ -56,7 +56,7 @@
 
                 <div class="zoho-form-actions">
                     <button type="submit" class="zoho-button" :disabled="loading">
-                        {{ loading ? 'Отправка...' : 'Создать запись' }}
+                        {{ loading ? 'Sending...' : 'Create record' }}
                     </button>
                 </div>
             </form>
