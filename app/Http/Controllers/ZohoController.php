@@ -6,18 +6,40 @@ use App\Http\Requests\CreateAccountDealRequest;
 use App\Http\Requests\ZohoAuthCallbackRequest;
 use App\Services\ZohoService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
+/**
+ * Контроллер для работы с Zoho CRM.
+ *
+ * Обрабатывает запросы авторизации, обратные вызовы OAuth,
+ * получение данных и создание записей в Zoho CRM.
+ */
 class ZohoController extends Controller
 {
+    /**
+     * Сервис для работы с Zoho CRM API.
+     *
+     * @var ZohoService
+     */
     protected ZohoService $zohoService;
 
+    /**
+     * Создает новый экземпляр контроллера.
+     *
+     * @param ZohoService $zohoService Сервис для работы с Zoho CRM
+     */
     public function __construct(ZohoService $zohoService)
     {
         $this->zohoService = $zohoService;
     }
 
+    /**
+     * Отображает страницу авторизации в Zoho CRM.
+     *
+     * @return Response Страница авторизации с URL для OAuth
+     */
     public function showAuth(): Response
     {
         $authUrl = $this->zohoService->getAuthUrl();
@@ -26,7 +48,13 @@ class ZohoController extends Controller
         ]);
     }
 
-    public function callback(ZohoAuthCallbackRequest $request)
+    /**
+     * Обрабатывает обратный вызов OAuth после авторизации в Zoho CRM.
+     *
+     * @param ZohoAuthCallbackRequest $request Запрос с кодом авторизации
+     * @return RedirectResponse Редирект с сообщением о результате
+     */
+    public function callback(ZohoAuthCallbackRequest $request): RedirectResponse
     {
         $validated = $request->validated();
         $result = $this->zohoService->processCallback(
@@ -41,6 +69,11 @@ class ZohoController extends Controller
         }
     }
 
+    /**
+     * Получает список доступных этапов сделок из Zoho CRM.
+     *
+     * @return JsonResponse JSON-ответ со списком этапов или сообщением об ошибке
+     */
     public function getDealStages(): JsonResponse
     {
         $result = $this->zohoService->getDealStages();
@@ -52,6 +85,12 @@ class ZohoController extends Controller
         }
     }
 
+    /**
+     * Создает новый аккаунт и сделку в Zoho CRM.
+     *
+     * @param CreateAccountDealRequest $request Запрос с данными аккаунта и сделки
+     * @return JsonResponse JSON-ответ с результатами создания или сообщением об ошибке
+     */
     public function createRecords(CreateAccountDealRequest $request): JsonResponse
     {
         $validated = $request->validated();

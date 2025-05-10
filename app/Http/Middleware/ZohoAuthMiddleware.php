@@ -2,23 +2,40 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Controllers\ZohoController;
 use App\Models\ZohoToken;
+use App\Services\ZohoService;
 use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
 
+/**
+ * Middleware для проверки авторизации пользователя в Zoho CRM.
+ *
+ * Проверяет наличие и действительность токена авторизации.
+ * При необходимости выполняет обновление токена или перенаправляет на страницу авторизации.
+ */
 class ZohoAuthMiddleware
 {
-    public function handle(Request $request, Closure $next)
+    /**
+     * Обрабатывает входящий запрос.
+     *
+     * Проверяет наличие действительного токена авторизации Zoho.
+     * Если токен доступа просрочен, то обновляет его.
+     * Если токен отсутствует, то перенаправляет на страницу авторизации.
+     *
+     * @param Request $request Входящий HTTP-запрос
+     * @param Closure $next Следующий обработчик в цепочке middleware
+     * @return mixed Ответ приложения или редирект на страницу авторизации
+     */
+    public function handle(Request $request, Closure $next): mixed
     {
         $token = ZohoToken::first();
         $isAuthenticated = !is_null($token);
 
         if ($isAuthenticated && $token->expires_at->lt(Carbon::now())) {
             // Пытаемся обновить токен
-            $zohoController = app(ZohoController::class);
-            $newToken = $zohoController->refreshToken($token);
+            $zohoService = app(ZohoService::class);
+            $newToken = $zohoService->refreshToken($token);
 
             // Если не удалось обновить токен, перенаправляем на авторизацию
             if (!$newToken) {

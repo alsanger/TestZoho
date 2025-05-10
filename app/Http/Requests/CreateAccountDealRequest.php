@@ -6,13 +6,28 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
+/**
+ * Запрос для создания аккаунта и сделки в Zoho CRM.
+ *
+ * Обрабатывает валидацию данных и форматирование ответа в случае ошибок.
+ */
 class CreateAccountDealRequest extends FormRequest
 {
+    /**
+     * Определяет, авторизован ли пользователь для выполнения этого запроса.
+     *
+     * @return bool Всегда возвращает true, так как авторизация обрабатывается middleware
+     */
     public function authorize(): bool
     {
-        return true; // Авторизация обрабатывается middleware
+        return true;
     }
 
+    /**
+     * Правила валидации для данных запроса.
+     *
+     * @return array<string, string> Массив правил валидации
+     */
     public function rules(): array
     {
         return [
@@ -24,6 +39,11 @@ class CreateAccountDealRequest extends FormRequest
         ];
     }
 
+    /**
+     * Пользовательские сообщения об ошибках валидации.
+     *
+     * @return array<string, string> Массив сообщений об ошибках
+     */
     public function messages(): array
     {
         return [
@@ -37,6 +57,13 @@ class CreateAccountDealRequest extends FormRequest
         ];
     }
 
+    /**
+     * Обрабатывает сбой валидации и возвращает JSON-ответ с ошибками.
+     *
+     * @param Validator $validator Экземпляр валидатора с ошибками
+     * @throws HttpResponseException JSON-ответ с ошибками валидации
+     * @return void
+     */
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(

@@ -7,14 +7,55 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * Сервис для работы с API Zoho CRM.
+ *
+ * Предоставляет методы для авторизации, управления токенами и
+ * взаимодействия с API Zoho CRM.
+ */
 class ZohoService
 {
+    /**
+     * Идентификатор клиента Zoho OAuth.
+     *
+     * @var string
+     */
     private $clientId;
+
+    /**
+     * Секретный ключ клиента Zoho OAuth.
+     *
+     * @var string
+     */
     private $clientSecret;
+    /**
+     * URI для перенаправления после авторизации OAuth.
+     *
+     * @var string
+     */
+
     private $redirectUri;
+
+    /**
+     * Базовый домен API Zoho.
+     *
+     * @var string
+     */
+
     private $zohoApiDomain;
+
+    /**
+     * Базовый домен для аккаунтов Zoho.
+     *
+     * @var string
+     */
     private $zohoAccountsDomain;
 
+    /**
+     * Инициализирует новый экземпляр сервиса Zoho.
+     *
+     * Загружает конфигурацию из переменных окружения.
+     */
     public function __construct()
     {
         $this->clientId = env('ZOHO_CLIENT_ID');
@@ -24,6 +65,11 @@ class ZohoService
         $this->zohoAccountsDomain = 'https://accounts.zoho.eu';
     }
 
+    /**
+     * Возвращает URL для авторизации в Zoho CRM.
+     *
+     * @return string URL для авторизации
+     */
     public function getAuthUrl(): string
     {
         return $this->zohoAccountsDomain . '/oauth/v2/auth?' . http_build_query([
@@ -36,7 +82,14 @@ class ZohoService
             ]);
     }
 
-    public function processCallback($code, $location = 'eu'): array
+    /**
+     * Обрабатывает ответ от OAuth-авторизации Zoho.
+     *
+     * @param string $code Код авторизации
+     * @param string $location Локация API Zoho (по умолчанию 'eu')
+     * @return array Результат обработки авторизации
+     */
+    public function processCallback(string $code, string $location = 'eu'): array
     {
         try {
             $accountsDomain = 'https://accounts.zoho.' . $location;
@@ -78,7 +131,14 @@ class ZohoService
         }
     }
 
-    public function getToken()
+    /**
+     * Получает действующий токен доступа.
+     *
+     * Проверяет наличие и действительность токена, при необходимости обновляет его.
+     *
+     * @return string|null Токен доступа или null, если не удалось получить токен
+     */
+    public function getToken(): ?string
     {
         $token = ZohoToken::first();
 
@@ -94,7 +154,13 @@ class ZohoService
         return $token->access_token;
     }
 
-    public function refreshToken($token)
+    /**
+     * Обновляет токен доступа Zoho.
+     *
+     * @param ZohoToken $token Текущий токен, требующий обновления
+     * @return string|null Новый токен доступа или null в случае ошибки
+     */
+    public function refreshToken($token): ?string
     {
         try {
             $response = Http::asForm()->post($this->zohoAccountsDomain . '/oauth/v2/token', [
@@ -123,6 +189,11 @@ class ZohoService
         }
     }
 
+    /**
+     * Получает список этапов сделок из Zoho CRM.
+     *
+     * @return array Результат запроса со списком этапов сделок или сообщением об ошибке
+     */
     public function getDealStages(): array
     {
         $token = $this->getToken();
@@ -164,6 +235,13 @@ class ZohoService
         }
     }
 
+    /**
+     * Создает аккаунт и сделку в Zoho CRM.
+     *
+     * @param array $accountData Данные аккаунта
+     * @param array $dealData Данные сделки
+     * @return array Результат создания записей
+     */
     public function createAccountAndDeal($accountData, $dealData): array
     {
         $token = $this->getToken();
