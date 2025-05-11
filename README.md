@@ -15,7 +15,7 @@ This is a test assignment for employment. The goal of the project is to build a 
 ## 🔗 Demo & Repository
 
 - GitHub Repository: [https://github.com/alsanger/TestZoho.git](https://github.com/alsanger/TestZoho.git)
-- Demo video: _Provided in the submission (mandatory)_
+- Demo video: https://youtu.be/obQGf7-ayGA
 
 ---
 
