@@ -55,8 +55,8 @@ This is a test assignment for employment. The goal of the project is to build a 
 2. composer install
 3. npm install
 4. npm run build
-5. php artisan migrate
-6. cp .env.example .env
+5. cp .env.example .env
+6. php artisan migrate
 7. php artisan key:generate 
 8. php artisan serve
 ```
