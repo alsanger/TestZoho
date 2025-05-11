@@ -5,16 +5,16 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Запрос для обработки обратного вызова OAuth от Zoho.
+ * Request to handle the OAuth callback from Zoho.
  *
- * Проверяет наличие и корректность кода авторизации и региона Zoho.
+ * Verifies the presence and validity of the authorization code and Zoho region.
  */
 class ZohoAuthCallbackRequest extends FormRequest
 {
     /**
-     * Определяет, авторизован ли пользователь для выполнения этого запроса.
+     * Determines if the user is authorized to perform this request.
      *
-     * @return bool Всегда возвращает true, так как авторизация обрабатывается middleware
+     * @return bool Always returns true, as authorization is handled by middleware
      */
     public function authorize(): bool
     {
@@ -22,9 +22,9 @@ class ZohoAuthCallbackRequest extends FormRequest
     }
 
     /**
-     * Правила валидации для данных запроса.
+     * Validation rules for the request data.
      *
-     * @return array<string, string> Массив правил валидации
+     * @return array<string, string> Array of validation rules
      */
     public function rules(): array
     {
@@ -35,9 +35,9 @@ class ZohoAuthCallbackRequest extends FormRequest
     }
 
     /**
-     * Пользовательские сообщения об ошибках валидации.
+     * Custom validation error messages.
      *
-     * @return array<string, string> Массив сообщений об ошибках
+     * @return array<string, string> Array of error messages
      */
     public function messages(): array
     {

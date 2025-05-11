@@ -11,24 +11,24 @@ use Inertia\Inertia;
 use Inertia\Response;
 
 /**
- * Контроллер для работы с Zoho CRM.
+ * Controller for interacting with Zoho CRM.
  *
- * Обрабатывает запросы авторизации, обратные вызовы OAuth,
- * получение данных и создание записей в Zoho CRM.
+ * Handles authorization requests, OAuth callbacks,
+ * data retrieval, and record creation in Zoho CRM.
  */
 class ZohoController extends Controller
 {
     /**
-     * Сервис для работы с Zoho CRM API.
+     * Service for working with the Zoho CRM API.
      *
      * @var ZohoService
      */
     protected ZohoService $zohoService;
 
     /**
-     * Создает новый экземпляр контроллера.
+     * Creates a new instance of the controller.
      *
-     * @param ZohoService $zohoService Сервис для работы с Zoho CRM
+     * @param ZohoService $zohoService Service for interacting with Zoho CRM
      */
     public function __construct(ZohoService $zohoService)
     {
@@ -36,9 +36,9 @@ class ZohoController extends Controller
     }
 
     /**
-     * Отображает страницу авторизации в Zoho CRM.
+     * Displays the Zoho CRM authorization page.
      *
-     * @return Response Страница авторизации с URL для OAuth
+     * @return Response Authorization page with OAuth URL
      */
     public function showAuth(): Response
     {
@@ -49,10 +49,10 @@ class ZohoController extends Controller
     }
 
     /**
-     * Обрабатывает обратный вызов OAuth после авторизации в Zoho CRM.
+     * Handles the OAuth callback after authorization in Zoho CRM.
      *
-     * @param ZohoAuthCallbackRequest $request Запрос с кодом авторизации
-     * @return RedirectResponse Редирект с сообщением о результате
+     * @param ZohoAuthCallbackRequest $request Request containing the authorization code
+     * @return RedirectResponse Redirect with a result message
      */
     public function callback(ZohoAuthCallbackRequest $request): RedirectResponse
     {
@@ -70,9 +70,9 @@ class ZohoController extends Controller
     }
 
     /**
-     * Получает список доступных этапов сделок из Zoho CRM.
+     * Retrieves the list of available deal stages from Zoho CRM.
      *
-     * @return JsonResponse JSON-ответ со списком этапов или сообщением об ошибке
+     * @return JsonResponse JSON response with the list of stages or an error message
      */
     public function getDealStages(): JsonResponse
     {
@@ -86,10 +86,10 @@ class ZohoController extends Controller
     }
 
     /**
-     * Создает новый аккаунт и сделку в Zoho CRM.
+     * Creates a new account and deal in Zoho CRM.
      *
-     * @param CreateAccountDealRequest $request Запрос с данными аккаунта и сделки
-     * @return JsonResponse JSON-ответ с результатами создания или сообщением об ошибке
+     * @param CreateAccountDealRequest $request Request containing account and deal data
+     * @return JsonResponse JSON response with the creation results or an error message
      */
     public function createRecords(CreateAccountDealRequest $request): JsonResponse
     {

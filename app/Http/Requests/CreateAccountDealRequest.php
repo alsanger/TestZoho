@@ -7,16 +7,16 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 /**
- * Запрос для создания аккаунта и сделки в Zoho CRM.
+ * Request for creating an account and deal in Zoho CRM.
  *
- * Обрабатывает валидацию данных и форматирование ответа в случае ошибок.
+ * Handles data validation and response formatting in case of errors.
  */
 class CreateAccountDealRequest extends FormRequest
 {
     /**
-     * Определяет, авторизован ли пользователь для выполнения этого запроса.
+     * Determines if the user is authorized to perform this request.
      *
-     * @return bool Всегда возвращает true, так как авторизация обрабатывается middleware
+     * @return bool Always returns true, as authorization is handled by middleware
      */
     public function authorize(): bool
     {
@@ -24,9 +24,9 @@ class CreateAccountDealRequest extends FormRequest
     }
 
     /**
-     * Правила валидации для данных запроса.
+     * Validation rules for the request data.
      *
-     * @return array<string, string> Массив правил валидации
+     * @return array<string, string> Array of validation rules
      */
     public function rules(): array
     {
@@ -40,9 +40,9 @@ class CreateAccountDealRequest extends FormRequest
     }
 
     /**
-     * Пользовательские сообщения об ошибках валидации.
+     * Custom validation error messages.
      *
-     * @return array<string, string> Массив сообщений об ошибках
+     * @return array<string, string> Array of error messages
      */
     public function messages(): array
     {
@@ -58,10 +58,10 @@ class CreateAccountDealRequest extends FormRequest
     }
 
     /**
-     * Обрабатывает сбой валидации и возвращает JSON-ответ с ошибками.
+     * Handles validation failure and returns a JSON response with errors.
      *
-     * @param Validator $validator Экземпляр валидатора с ошибками
-     * @throws HttpResponseException JSON-ответ с ошибками валидации
+     * @param Validator $validator Validator instance with errors
+     * @throws HttpResponseException JSON response with validation errors
      * @return void
      */
     protected function failedValidation(Validator $validator)

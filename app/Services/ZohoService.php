@@ -8,53 +8,51 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 /**
- * Сервис для работы с API Zoho CRM.
+ * Service for working with Zoho CRM API.
  *
- * Предоставляет методы для авторизации, управления токенами и
- * взаимодействия с API Zoho CRM.
+ * Provides methods for authorization, token management
+ * and interaction with Zoho CRM API.
  */
 class ZohoService
 {
     /**
-     * Идентификатор клиента Zoho OAuth.
+     * Zoho OAuth client identifier.
      *
      * @var string
      */
     private $clientId;
 
     /**
-     * Секретный ключ клиента Zoho OAuth.
+     * Zoho OAuth client secret.
      *
      * @var string
      */
     private $clientSecret;
     /**
-     * URI для перенаправления после авторизации OAuth.
+     * OAuth authorization redirect URI.
      *
      * @var string
      */
-
     private $redirectUri;
 
     /**
-     * Базовый домен API Zoho.
+     * Zoho API base domain.
      *
      * @var string
      */
-
     private $zohoApiDomain;
 
     /**
-     * Базовый домен для аккаунтов Zoho.
+     * Base domain for Zoho accounts.
      *
      * @var string
      */
     private $zohoAccountsDomain;
 
     /**
-     * Инициализирует новый экземпляр сервиса Zoho.
+     * Initializes a new instance of the Zoho service.
      *
-     * Загружает конфигурацию из переменных окружения.
+     * Loads configuration from environment variables.
      */
     public function __construct()
     {
@@ -66,9 +64,9 @@ class ZohoService
     }
 
     /**
-     * Возвращает URL для авторизации в Zoho CRM.
+     * Returns the authorization URL for Zoho CRM.
      *
-     * @return string URL для авторизации
+     * @return string Authorization URL
      */
     public function getAuthUrl(): string
     {
@@ -83,11 +81,11 @@ class ZohoService
     }
 
     /**
-     * Обрабатывает ответ от OAuth-авторизации Zoho.
+     * Processes the response from Zoho OAuth authorization.
      *
-     * @param string $code Код авторизации
-     * @param string $location Локация API Zoho (по умолчанию 'eu')
-     * @return array Результат обработки авторизации
+     * @param string $code Authorization code
+     * @param string $location Zoho API location (default: 'eu')
+     * @return array Authorization processing result
      */
     public function processCallback(string $code, string $location = 'eu'): array
     {
@@ -132,11 +130,11 @@ class ZohoService
     }
 
     /**
-     * Получает действующий токен доступа.
+     * Retrieves a valid access token.
      *
-     * Проверяет наличие и действительность токена, при необходимости обновляет его.
+     * Checks token availability and validity, refreshes it if necessary.
      *
-     * @return string|null Токен доступа или null, если не удалось получить токен
+     * @return string|null Access token or null if failed to get token
      */
     public function getToken(): ?string
     {
@@ -155,10 +153,10 @@ class ZohoService
     }
 
     /**
-     * Обновляет токен доступа Zoho.
+     * Refreshes Zoho access token.
      *
-     * @param ZohoToken $token Текущий токен, требующий обновления
-     * @return string|null Новый токен доступа или null в случае ошибки
+     * @param ZohoToken $token Current token that needs refreshing
+     * @return string|null New access token or null on error
      */
     public function refreshToken($token): ?string
     {
@@ -190,9 +188,9 @@ class ZohoService
     }
 
     /**
-     * Получает список этапов сделок из Zoho CRM.
+     * Retrieves deal stages list from Zoho CRM.
      *
-     * @return array Результат запроса со списком этапов сделок или сообщением об ошибке
+     * @return array Request result with deal stages list or error message
      */
     public function getDealStages(): array
     {
@@ -236,11 +234,11 @@ class ZohoService
     }
 
     /**
-     * Создает аккаунт и сделку в Zoho CRM.
+     * Creates an account and a deal in Zoho CRM.
      *
-     * @param array $accountData Данные аккаунта
-     * @param array $dealData Данные сделки
-     * @return array Результат создания записей
+     * @param array $accountData Account data
+     * @param array $dealData Deal data
+     * @return array Result of record creation
      */
     public function createAccountAndDeal($accountData, $dealData): array
     {

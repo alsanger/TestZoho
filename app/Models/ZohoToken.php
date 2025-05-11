@@ -21,7 +21,7 @@ class ZohoToken extends Model
     use HasFactory;
 
     /**
-     * Атрибуты, которые можно массово назначать.
+     * Attributes that can be mass-assigned.
      *
      * @var array<int, string>
      */
@@ -32,7 +32,7 @@ class ZohoToken extends Model
     ];
 
     /**
-     * Атрибуты, которые должны быть преобразованы в определенные типы.
+     * Attributes that should be cast to specific types.
      *
      * @var array<string, string>
      */

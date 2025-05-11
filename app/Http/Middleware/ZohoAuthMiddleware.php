@@ -9,23 +9,23 @@ use Closure;
 use Illuminate\Http\Request;
 
 /**
- * Middleware для проверки авторизации пользователя в Zoho CRM.
+ * Middleware for Zoho CRM user authorization check.
  *
- * Проверяет наличие и действительность токена авторизации.
- * При необходимости выполняет обновление токена или перенаправляет на страницу авторизации.
+ * Verifies the presence and validity of the auth token.
+ * If needed, performs token refresh or redirects to the auth page.
  */
 class ZohoAuthMiddleware
 {
     /**
-     * Обрабатывает входящий запрос.
+     * Processes the incoming request.
      *
-     * Проверяет наличие действительного токена авторизации Zoho.
-     * Если токен доступа просрочен, то обновляет его.
-     * Если токен отсутствует, то перенаправляет на страницу авторизации.
+     * Checks for a valid Zoho authorization token.
+     * If the access token is expired, refreshes it.
+     * If the token is missing, redirects to the authorization page.
      *
-     * @param Request $request Входящий HTTP-запрос
-     * @param Closure $next Следующий обработчик в цепочке middleware
-     * @return mixed Ответ приложения или редирект на страницу авторизации
+     * @param Request $request Incoming HTTP request
+     * @param Closure $next Next handler in the middleware chain
+     * @return mixed Application response or redirect to authorization page
      */
     public function handle(Request $request, Closure $next): mixed
     {
